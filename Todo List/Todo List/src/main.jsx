@@ -11,6 +11,9 @@ createRoot(document.getElementById('root')).render(
     <div className='text-center text-red-500'>
       Hello, Tailwind
     </div>
+    <div className='text-center text-yellow-500'>
+      This is green
+    </div>
     <App />
   </StrictMode>,
 )

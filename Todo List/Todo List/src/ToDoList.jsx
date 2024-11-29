@@ -28,12 +28,24 @@ const ToDoList = () => {
             tasksList.map((task) => task.id === id ? {...task, checked: !task.checked} : task)
         );
     };
-  
+
+    const tasks = [
+        {id: 1, text: "task one", checked: false},
+        {id: 2, text: "task two", checked: true},
+        {id: 3, text: "task three", checked: false}
+    ]
+
   return (
     <div>
         {/* I need to run throuhg the tasks list and make Task items */}
-
-        
+        {tasks.map((task) => (
+            <Task
+                id={task.id}
+                text={task.text}
+                checked={task.checked}
+                onChecked={onChecked}
+            />
+        ))}
 
     </div>
   );
