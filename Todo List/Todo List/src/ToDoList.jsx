@@ -24,14 +24,16 @@ const ToDoList = () => {
 
     //function to add todo
     const addToDo = () => {
-        const newTask = {
-            id: Date.now(),
-            text: taskName,
-            checked: false,
-        };
-        setTasksList([...tasksList, newTask]);
-        setTaskName('');
-    }
+        if (taskName != '') {
+            const newTask = {
+                id: Date.now(),
+                text: taskName,
+                checked: false,
+            };
+            setTasksList([...tasksList, newTask]);
+            setTaskName('');
+        }
+    };
 
     //function to check off todo
     const onChecked = (id) => {
@@ -59,7 +61,7 @@ const ToDoList = () => {
         ))}
 
         <div className="flex justify-center items-center flex-col">
-            <input className="bg-cyan-500 flex justify-center" value={taskName} onChange={(e) => setTaskName(e.target.value)}></input>
+            <input className="bg-cyan-500 flex justify-center" value={taskName} onKeyDown={(e) => {if(e.key === "Enter") {addToDo()}}} onChange={(e) => setTaskName(e.target.value)}></input>
             <button onClick={() => addToDo()}>Add New Task</button>
         </div>
     </div>
