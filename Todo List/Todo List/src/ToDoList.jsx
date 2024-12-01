@@ -35,6 +35,12 @@ const ToDoList = () => {
         }
     };
 
+    const deleteToDo = (id) => {
+        setTasksList(
+            tasksList.filter((task) => task.id !== id)
+        );
+    };
+
     //function to check off todo
     const onChecked = (id) => {
         console.log("onChecked run");
@@ -57,6 +63,7 @@ const ToDoList = () => {
                 text={task.text}
                 checked={task.checked}
                 onChecked={onChecked}
+                deleteToDo={deleteToDo}
             />
         ))}
 
