@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Task from './Task'; // Import the Task component
+import EditTask from './EditTask';
 
 const ToDoList = () => {
 
@@ -12,9 +13,9 @@ const ToDoList = () => {
 
     //state to hold array of tasks
     const [tasksList, setTasksList] = useState([
-        {id: 1, text: "task one", checked: false},
-        {id: 2, text: "task two", checked: true},
-        {id: 3, text: "task three", checked: false}
+        {id: 1, text: "task one", checked: false, isEditing: false},
+        {id: 2, text: "task two", checked: true, isEditing: false},
+        {id: 3, text: "task three", checked: false, isEditing: false}
     ]);
 
     console.log(tasksList);
@@ -29,6 +30,7 @@ const ToDoList = () => {
                 id: Date.now(),
                 text: taskName,
                 checked: false,
+                isEditing: false
             };
             setTasksList([...tasksList, newTask]);
             setTaskName('');
@@ -54,18 +56,39 @@ const ToDoList = () => {
         console.log(tasksList[1].checked)
     };
 
+    //function to change an existing todo
+    const editTodo = (id, newText) => {
+        setTasksList(
+            tasksList.map((task) => task.id === id ? {...task, text: newText, isEditing: false} : task)
+        );
+    }
+
+    //function to change task component to edit task component
+    const toggleEdit = (id) => {
+        setTasksList(
+            tasksList.map((task) => task.id === id ? {...task, isEditing: true} : task)
+        );
+    }
+
   return (
     <div>
         {/* I need to run throuhg the tasks list and make Task items */}
-        {tasksList.map((task) => (
+        {tasksList.map((task) => task.isEditing ? (
+            <EditTask
+                id={task.id}
+                text={task.text}
+                editTodo={editTodo}
+            />
+        ) : (
             <Task
                 id={task.id}
                 text={task.text}
                 checked={task.checked}
                 onChecked={onChecked}
                 deleteToDo={deleteToDo}
+                toggleEdit={toggleEdit}
             />
-        ))}
+        ) )}
 
         <div className="flex justify-center items-center flex-col">
             <input className="bg-cyan-500 flex justify-center" value={taskName} onKeyDown={(e) => {if(e.key === "Enter") {addToDo()}}} onChange={(e) => setTaskName(e.target.value)}></input>
